@@ -7,7 +7,9 @@ RUN apt-get update && \
 RUN mkdir /etc/nginx/ssl && \
 	openssl req -x509 -newkey rsa:2048 -keyout /etc/nginx/ssl/nginx.key -out /etc/nginx/ssl/nginx.crt -days 365 -nodes -subj '/CN=localhost'
 
-# COPY nginx.conf /etc/nginx/nginx.conf
+COPY nginx.conf /etc/nginx/conf.d
+
+RUN ls -la /etc/nginx/
 
 EXPOSE 443
 
