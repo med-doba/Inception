@@ -9,7 +9,7 @@ RUN mkdir /etc/nginx/ssl && \
 
 COPY nginx.conf /etc/nginx/conf.d
 
-RUN ls -la /etc/nginx/
+# RUN ls -la /etc/nginx/
 
 EXPOSE 443
 
