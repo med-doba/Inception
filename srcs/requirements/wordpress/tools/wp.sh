@@ -1,22 +1,29 @@
 #!/bin/bash
 
 # Download WordPress and move it to the HTML directory
-# wget -q https://wordpress.org/latest.tar.gz
-curl -O https://wordpress.org/latest.tar.gz \
-	&& tar -xzf latest.tar.gz \
-	&& rm latest.tar.gz \
-	&& mv wordpress/* . \
-	&& rm -r wordpress
+# wget -q https://wordpress.org/latest.tar.gz \
+# curl -O https://wordpress.org/latest.tar.gz \
+# 	&& tar -xzf latest.tar.gz \
+# 	&& rm latest.tar.gz \
+# 	&& mv wordpress/* /var/www/html/ \
+# 	&& rm -r wordpress
+cd /var/www/html
+wp core download --allow-root
+wp config create --allow-root
+wp core config --dbname=your_db_name --dbuser=your_db_user --dbpass=your_db_password --dbhost=your_db_host --allow-root
+wp core install --url=127.0.0.1:443 --title=42inception --admin_user=med-doba --admin_password=@med-doba --admin_email=mohaeddo03@gmail.com --allow-root
+
 
 #Create the configuration file of wordpress
-cp wordpress/wp-config-sample.php wordpress/wp-config.php
+# cp /var/www/html//wp-config-sample.php /var/www/html//wp-config.php
 
 #Give the 4th environmental variables for wordpress
-sed -i "s/database_name_here/${WORDPRESS_DB_NAME}/g" /var/www/html/wp-config.php
-sed -i "s/username_here/${WORDPRESS_DB_USER}/g" /var/www/html/wp-config.php
-sed -i "s/password_here/${WORDPRESS_DB_PASSWORD}/g" /var/www/html/wp-config.php
-sed -i "s/localhost/${WORDPRESS_DB_HOST}/g" /var/www/html/wp-config.php
+# sed -i "s/database_name_here/${WORDPRESS_DB_NAME}/g" /var/www/html/wp-config.php
+# sed -i "s/username_here/${WORDPRESS_DB_USER}/g" /var/www/html/wp-config.php
+# sed -i "s/password_here/${WORDPRESS_DB_PASSWORD}/g" /var/www/html/wp-config.php
+# sed -i "s/localhost/${WORDPRESS_DB_HOST}/g" /var/www/html/wp-config.php
 
+php-fpm7.3 -F
 
 # `This script assumes that you have defined the four required environment variables ($WORDPRESS_DB_NAME, $WORDPRESS_DB_USER, $WORDPRESS_DB_PASSWORD, and $WORDPRESS_DB_HOST) before running the script.
 

@@ -7,7 +7,16 @@ services:
       -"443:443"
     depends_on:
       - db
+      restart: always
+
   db:
     build: ./requirements/mariadb
-    envirement:
-      MYSQL_ROOT_PASSWORD: password
+    # envirement:
+    #   MYSQL_ROOT_PASSWORD: password
+    restart: always
+
+  wordpress:
+    depends_on:
+      - db
+    build: ./requirement/wordpress
+
