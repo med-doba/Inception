@@ -5,17 +5,21 @@ FROM debian:buster
 ENV MARIADB_VERSION=10.5
 
 # Install the required packages
-# RUN apt-get update && \
-#     apt-get install -y mariadb-server && \
-#     rm -rf /var/lib/apt/lists/*docker run -d --name my-mariadb-container -p 3306:3306 my-mariadb-image
-
 RUN apt-get update && apt-get install -y mariadb-server mariadb-client
 
-# Copy the custom configuration file to the container
-# COPY my.cnf /etc/mysql/conf.d/my.cnf
+RUN sed -i 's|^bind-address = .*$|bind-address = 0.0.0.0|' /etc/mysql/mariadb.conf.d/50-server.cnf
+
+RUN sed -i 's/^skip-networking/#&/' /etc/mysql/mariadb.conf.d/50-server.cnf
+
+COPY ./tools/db.sh /usr/local/bin/
+
+RUN chmod +x /usr/local/bin/db.sh
+
+# ENTRYPOINT ["/usr/local/bin/db.sh"]
 
 # Expose the default MySQL port
 EXPOSE 3306
 
 # Start the MariaDB service
-CMD ["mysqld"]
+# CMD ["mysqld"]
+CMD ["/usr/local/bin/db.sh"]
