@@ -10,8 +10,9 @@
 cd /var/www/html
 wp core download --allow-root
 wp config create --allow-root
-wp core config --dbname=your_db_name --dbuser=your_db_user --dbpass=your_db_password --dbhost=your_db_host --allow-root
+wp core config --dbname=${DB_NAME} --dbuser=${DB_USER} --dbpass=${DB_PASSWORD} --dbhost=${DB_HOST} --allow-root
 wp core install --url=127.0.0.1:443 --title=42inception --admin_user=med-doba --admin_password=@med-doba --admin_email=mohaeddo03@gmail.com --allow-root
+# wp core install --url=${URL} --title=${TITLE} --admin_user=${ADMIN_USER} --admin_password=${ADMIN_PASSWORD} --admin_email=${ADMIN_EMAIL} --allow-root
 
 
 #Create the configuration file of wordpress

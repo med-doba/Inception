@@ -1,22 +1,36 @@
 version: '3'
 
 services:
-  web:
+  db:
+    build: ./requirements/mariadb
+    restart: always
+    volumes:
+      - db_data:/var/lib/mysql
+    env_file:
+      - .env
+
+  wordpress:
+    build: ./requirement/wordpress
+    restart: always
+    volumes:
+      - wp_data:/var/www/html
+      - wp_files:/var/www/html/wp-content
+    env_file:
+      - .env
+    depends_on:
+      - db
+
+  nginx:
     build: ./requirements/nginx
     ports:
       -"443:443"
     depends_on:
       - db
-      restart: always
-
-  db:
-    build: ./requirements/mariadb
-    # envirement:
-    #   MYSQL_ROOT_PASSWORD: password
     restart: always
+    env_file:
+      - .env
 
-  wordpress:
-    depends_on:
-      - db
-    build: ./requirement/wordpress
-
+  volumes:
+    db_datta
+    wp__data
+    wp_files
