@@ -9,8 +9,13 @@
 # 	&& rm -r wordpress
 cd /var/www/html
 wp core download --allow-root
-wp config create --allow-root
-wp core config --dbname=${DB_NAME} --dbuser=${DB_USER} --dbpass=${DB_PASSWORD} --dbhost=${DB_HOST} --allow-root
+cp wp-config-sample.php wp-config.php
+# wp config create --allow-root
+sed -i "s/database_name_here/${DB_NAME}/g" /var/www/html/wp-config.php
+sed -i "s/username_here/${DB_USER}/g" /var/www/html/wp-config.php
+sed -i "s/password_here/${DB_PASSWORD}/g" /var/www/html/wp-config.php
+sed -i "s/localhost/${DB_HOST}/g" /var/www/html/wp-config.php
+# wp core config --dbname=${DB_NAME} --dbuser=${DB_USER} --dbpass=${DB_PASSWORD} --dbhost=${DB_HOST} --allow-root
 wp core install --url=127.0.0.1:443 --title=42inception --admin_user=med-doba --admin_password=@med-doba --admin_email=mohaeddo03@gmail.com --allow-root
 # wp core install --url=${URL} --title=${TITLE} --admin_user=${ADMIN_USER} --admin_password=${ADMIN_PASSWORD} --admin_email=${ADMIN_EMAIL} --allow-root
 
@@ -19,10 +24,6 @@ wp core install --url=127.0.0.1:443 --title=42inception --admin_user=med-doba --
 # cp /var/www/html//wp-config-sample.php /var/www/html//wp-config.php
 
 #Give the 4th environmental variables for wordpress
-# sed -i "s/database_name_here/${WORDPRESS_DB_NAME}/g" /var/www/html/wp-config.php
-# sed -i "s/username_here/${WORDPRESS_DB_USER}/g" /var/www/html/wp-config.php
-# sed -i "s/password_here/${WORDPRESS_DB_PASSWORD}/g" /var/www/html/wp-config.php
-# sed -i "s/localhost/${WORDPRESS_DB_HOST}/g" /var/www/html/wp-config.php
 
 php-fpm7.3 -F
 

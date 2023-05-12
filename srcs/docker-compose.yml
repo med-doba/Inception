@@ -2,35 +2,65 @@ version: '3'
 
 services:
   db:
+    container_name: mariadb
     build: ./requirements/mariadb
     restart: always
     volumes:
       - db_data:/var/lib/mysql
     env_file:
       - .env
+    networks:
+      - my-network
 
   wordpress:
-    build: ./requirement/wordpress
+    container_name: wordpress
+    build: ./requirements/wordpress
     restart: always
     volumes:
       - wp_data:/var/www/html
-      - wp_files:/var/www/html/wp-content
     env_file:
       - .env
     depends_on:
       - db
+    networks:
+      - my-network
 
   nginx:
+    container_name: nginx
     build: ./requirements/nginx
     ports:
-      -"443:443"
+      - "443:443"
     depends_on:
       - db
+      - wordpress
     restart: always
     env_file:
       - .env
+    networks:
+      - my-network
+    volumes:
+      - wp_data:/var/www/html
 
-  volumes:
-    db_datta
-    wp__data
-    wp_files
+networks:
+  my-network:
+    driver: bridge
+
+
+volumes:
+  db_data:
+    driver: local
+    driver_opts:
+     type: none
+     o: bind
+     device: /Users/med-doba/Desktop/volumes/db_data
+  wp_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /Users/med-doba/Desktop/volumes/wp_data
+# In your Docker Compose file, you have specified the volumes section under the services section, which is not supported. Volumes should be specified outside of the services section.
+
+# You also have a syntax error in the volumes section, where you have used wp_data as a volume name, and also specified driver options for it. Driver options should only be specified for named volumes, and not for host volumes.
+
+# Here's a corrected version of your Docker Compose file with the volumes section moved outside of the services section, and the volume definition for wp_data corrected:

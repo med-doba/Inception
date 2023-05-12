@@ -18,10 +18,8 @@ RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli
 	mv wp-cli.phar /usr/local/bin/wp
 
 # Set the working directory to the HTML directory
-WORKDIR /var/www/html
+# WORKDIR /var/www/html
 
 COPY ./tools/wp.sh .
-
-EXPOSE 9000
 
 CMD ["./wp.sh"]

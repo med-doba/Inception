@@ -14,6 +14,8 @@ done
 
 # sed -i 's/^skip-networking/#&/' /etc/mysql/mariadb.conf.d/50-server.cnf
 
+# mysql -uroot -e "SET PASSWORD FOR 'root'@'localhost' = PASSWORD('mysecretpassword')"
+
 # Create the database
 mysql -e "CREATE DATABASE wordpress;"
 
