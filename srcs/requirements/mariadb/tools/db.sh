@@ -17,17 +17,18 @@ done
 # mysql -uroot -e "SET PASSWORD FOR 'root'@'localhost' = PASSWORD('mysecretpassword')"
 
 # Create the database
-mysql -e "CREATE DATABASE wordpress;"
+# mysql -e "CREATE DATABASE wordpress;"
+mysql -e "CREATE DATABASE ${DB_NAME};"
 
 # create a new user with the username and password.
 # mysql -e "CREATE USER 'med'@'%' IDENTIFIED BY 'password';"
-mysql -e "SELECT User FROM mysql.user WHERE User='med';"
-mysql -e "DROP USER IF EXISTS 'med'@'%';"
-mysql -e "CREATE USER 'med'@'%' IDENTIFIED BY 'password';"
+mysql -e "SELECT User FROM mysql.user WHERE User='${DB_USER}';"
+mysql -e "DROP USER IF EXISTS '${DB_USER}'@'%';"
+mysql -e "CREATE USER '${DB_USER}'@'%' IDENTIFIED BY '${DB_PASSWORD}';"
 
 
 # Grant all privileges to the user
-mysql -e "GRANT ALL PRIVILEGES ON wordpress.* TO 'med'@'%';"
+mysql -e "GRANT ALL PRIVILEGES ON ${DB_NAME}.* TO '${DB_USER}'@'%';"
 
 # To apply the changes, flush the privileges.
 mysql -e "FLUSH PRIVILEGES;"
