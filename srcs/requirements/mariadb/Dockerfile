@@ -17,10 +17,4 @@ COPY ./tools/db.sh /usr/local/bin/
 
 RUN chmod +x /usr/local/bin/db.sh
 
-# ENTRYPOINT ["/usr/local/bin/db.sh"]
-
-# Expose the default MySQL port
-
-# Start the MariaDB service
-# CMD ["mysqld"]
 CMD ["/usr/local/bin/db.sh"]
