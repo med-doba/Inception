@@ -1,0 +1,17 @@
+FROM debian:buster
+
+RUN apt-get update && apt-get install -y curl php
+
+RUN mkdir /adminer
+
+WORKDIR /adminer
+
+RUN curl -o adminer.php https://www.adminer.org/latest.php
+
+RUN mv /adminer/adminer.php /var/www/html/index.php
+
+RUN chown -R www-data:www-data /var/www/html
+
+COPY your-config-file.conf /etc/php/7.3/fpm/conf.d/your-config-file.conf
+
+CMD []

@@ -1,30 +1,36 @@
 #!/bin/bash
 
-# Start the MariaDB server
+DB_NAME_=$DB_NAME
+DB_USER_=$DB_USER
+DB_PASSWORD_=$DB_PASSWORD
+DB_HOST_=$DB_HOST
+
 service mysql start
 
-# Wait for the server to start
 while ! mysqladmin ping -hlocalhost --silent; do
 	sleep 1
 done
 
-# Create the database
-mysql -e "CREATE DATABASE ${DB_NAME};"
+if ! mysql -u root -p${MYSQL_ROOT_PASSWORD} -e "SELECT 1;" 2>/dev/null; then
+	mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}';"
+fi
 
-# create a new user with the username and password.
-mysql -e "SELECT User FROM mysql.user WHERE User='${DB_USER}';"
-mysql -e "DROP USER IF EXISTS '${DB_USER}'@'%';"
-mysql -e "CREATE USER '${DB_USER}'@'%' IDENTIFIED BY '${DB_PASSWORD}';"
+if ! mysql -u root -p${MYSQL_ROOT_PASSWORD} -e "USE $DB_NAME_;" 2>/dev/null; then
+	mysql -u root -p${MYSQL_ROOT_PASSWORD} -e "CREATE DATABASE $DB_NAME_;"
+fi
 
-# Grant all privileges to the user
-mysql -e "GRANT ALL PRIVILEGES ON ${DB_NAME}.* TO '${DB_USER}'@'%';"
+mysql -u root -p${MYSQL_ROOT_PASSWORD} -e "SELECT User FROM mysql.user WHERE User='$DB_USER_';"
+mysql -u root -p${MYSQL_ROOT_PASSWORD} -e "DROP USER IF EXISTS '$DB_USER_'@'%';"
 
-# To apply the changes, flush the privileges.
-mysql -e "FLUSH PRIVILEGES;"
+mysql -u root -p${MYSQL_ROOT_PASSWORD} -e "CREATE USER '$DB_USER_'@'%' IDENTIFIED BY '$DB_PASSWORD_';"
+mysql -u root -p${MYSQL_ROOT_PASSWORD} -e "GRANT ALL PRIVILEGES ON $DB_NAME_.* TO '$DB_USER_'@'%' WITH GRANT OPTION;"
 
-# sleep
+mysql -u root -p${MYSQL_ROOT_PASSWORD} -e "FLUSH PRIVILEGES;"
+
 sleep 5
 
 kill $(cat /var/run/mysqld/mysqld.pid)
+
+sleep 5
 
 mysqld

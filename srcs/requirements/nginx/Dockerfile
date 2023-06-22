@@ -16,6 +16,4 @@ COPY ./conf/nginx.conf /etc/nginx/conf.d/
 # Create a directory for PHP temporary files
 RUN mkdir -p /var/www/html
 
-# EXPOSE 443
-
 CMD ["nginx", "-g", "daemon off;"]

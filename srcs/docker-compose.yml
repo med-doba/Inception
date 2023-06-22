@@ -40,6 +40,15 @@ services:
       - my-network
     volumes:
       - wp_data:/var/www/html
+  
+  redis:
+    container_name: redis
+    build: ./requirements/bonus/redis
+    restart: always
+    networks:
+      - my-network
+  
+  adminer:           image: dockette/adminer:full-php5           restart: always           ports:              - 8080:8080
 
 networks:
   my-network:
@@ -59,16 +68,3 @@ volumes:
       type: none
       o: bind
       device: /Users/med-doba/Desktop/volumes/wp_data
-
-
-
-
-
-
-
-
-# In your Docker Compose file, you have specified the volumes section under the services section, which is not supported. Volumes should be specified outside of the services section.
-
-# You also have a syntax error in the volumes section, where you have used wp_data as a volume name, and also specified driver options for it. Driver options should only be specified for named volumes, and not for host volumes.
-
-# Here's a corrected version of your Docker Compose file with the volumes section moved outside of the services section, and the volume definition for wp_data corrected:
