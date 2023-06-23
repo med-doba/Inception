@@ -33,6 +33,7 @@ services:
     depends_on:
       - db
       - wordpress
+      - adminer
     restart: always
     env_file:
       - .env
@@ -40,15 +41,24 @@ services:
       - my-network
     volumes:
       - wp_data:/var/www/html
-  
+
   redis:
     container_name: redis
     build: ./requirements/bonus/redis
     restart: always
     networks:
       - my-network
-  
-  adminer:           image: dockette/adminer:full-php5           restart: always           ports:              - 8080:8080
+
+  adminer:
+    container_name: adminer
+    build: ./requirements/bonus/adminer
+    depends_on:
+      - db
+    restart: always
+    expose:
+     - "9000"
+    networks:
+      - my-network
 
 networks:
   my-network:
@@ -61,10 +71,10 @@ volumes:
     driver_opts:
      type: none
      o: bind
-     device: /Users/med-doba/Desktop/volumes/db_data
+     device: /Users/mac/Desktop/volumes/db_data
   wp_data:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /Users/med-doba/Desktop/volumes/wp_data
+      device: /Users/mac/Desktop/volumes/wp_data
