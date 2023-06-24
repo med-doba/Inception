@@ -1,10 +1,13 @@
 #!/bin/bash
 
 dir=/var/www/html
+mkdir -p $dir
 
-if [ -d "$dir" ]; then
+cd /var/www/html
+rm -rf *
+
+# if [ -d "$dir" ]; then
     # Download WordPress and move it to the HTML directory
-    cd /var/www/html
     wp core download --allow-root
 
     # #Create the configuration file of wordpress
@@ -29,7 +32,7 @@ if [ -d "$dir" ]; then
     # wp plugin i redis-cache --activate --allow-root
     wp redis enable --allow-root
 
-fi
+# fi
 
 #start the php-fpm servere
 php-fpm7.3 -F

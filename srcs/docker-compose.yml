@@ -8,7 +8,7 @@ services:
     env_file:
       - .env
     volumes:
-      - db_data:/var/lib/mysql
+      - db_data:/var/lib/mysql:rw
     networks:
       - my-network
 
@@ -41,6 +41,7 @@ services:
       - my-network
     volumes:
       - wp_data:/var/www/html
+      - web_data:/var/www/html/website
 
   redis:
     container_name: redis
@@ -59,7 +60,16 @@ services:
      - "9000"
     networks:
       - my-network
-
+  
+  website:
+    container_name: website
+    build: ./requirements/bonus/website
+    restart: always
+    volumes:
+      - web_data:/app/website
+    networks:
+      - my-network
+    
 networks:
   my-network:
     driver: bridge
@@ -71,10 +81,16 @@ volumes:
     driver_opts:
      type: none
      o: bind
-     device: /Users/mac/Desktop/volumes/db_data
+     device: /Users/med-doba/Desktop/volumes/db_data
   wp_data:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /Users/mac/Desktop/volumes/wp_data
+      device: /Users/med-doba/Desktop/volumes/wp_data
+  web_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /Users/med-doba/Desktop/volumes/web_data

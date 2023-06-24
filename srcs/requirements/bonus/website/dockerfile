@@ -1,0 +1,28 @@
+FROM debian:buster
+
+RUN apt-get update && apt-get install -y git
+
+RUN mkdir -p /app
+
+WORKDIR /app
+
+RUN rm -rf ./*
+
+RUN git clone https://github.com/med-doba/StaticPortfolioWebsite.git website
+
+CMD ["sleep", "1000000"]
+# FROM debian:buster
+
+# RUN apt-get update && apt-get install -y git
+
+# WORKDIR /
+
+# RUN mkdir -p /StaticPortfolioWebsite
+
+# RUN rm -rf /StaticPortfolioWebsite/*
+
+# RUN cd /StaticPortfolioWebsite
+
+# RUN git clone https://github.com/med-doba/StaticPortfolioWebsite.git
+
+# CMD ["sleep", "1000000"]
