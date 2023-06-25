@@ -1,0 +1,26 @@
+FROM debian:buster
+
+# Install required dependencies
+RUN apt-get update && apt-get install -y \
+    ca-certificates \
+    git \
+    curl \
+    golang-go \
+    mercurial \
+    build-essential
+
+# Set up Go environment variables
+ENV GOPATH /go
+ENV PATH $GOPATH/bin:/usr/local/go/bin:$PATH
+
+# Build and install MailHog
+RUN go get github.com/mailhog/MailHog
+
+COPY ./tools/mailhog.sh .
+RUN chmod +x ./mailhog.sh
+
+# Expose the SMTP and HTTP ports
+EXPOSE 1025 8025
+
+# Set the entrypoint command to start MailHog
+CMD ["./mailhog.sh"]

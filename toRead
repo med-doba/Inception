@@ -50,3 +50,22 @@
 # After setting the environmental variables, you can then edit the wp-config.php file to include the actual values for those variables."
 
 https://dariusforoux.medium.com/save-20-hours-a-week-by-removing-these-4-useless-things-in-your-life-c0d831b09a3a
+
+
+    location /: This line specifies that the following directives should be applied to requests that match the root path ("/") or any subpaths. In other words, it captures all incoming requests.
+
+    proxy_pass http://mailhog-container:8025;: This directive specifies the target URL where the request should be forwarded. In this case, it forwards the request to http://mailhog-container:8025, which represents the MailHog container's HTTP endpoint.
+
+    proxy_set_header Host $host;: This directive sets the Host header of the forwarded request to the value of the original request's Host header. It ensures that the destination server (MailHog) receives the original host information.
+
+    proxy_set_header X-Real-IP $remote_addr;: This directive sets the X-Real-IP header of the forwarded request to the IP address of the client that made the original request. It allows the destination server to determine the real IP address of the client when it is sitting behind a reverse proxy.
+
+    proxy_set_header X-Forwarded-Proto $scheme;: This directive sets the X-Forwarded-Proto header of the forwarded request to the scheme (HTTP or HTTPS) of the original request. It helps the destination server (MailHog) understand whether the original request was made over HTTP or HTTPS.
+
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;: This directive sets the X-Forwarded-For header of the forwarded request to a comma-separated list of client IP addresses. It includes the client's IP address as well as any intermediate proxy servers' IP addresses. This header provides information about the client's chain of proxies.
+
+These proxy_set_header directives help pass along relevant information from the original client request to the destination server (MailHog) so that it can handle the request correctly and access information such as the client's IP address and the scheme (HTTP or HTTPS) used in the original request.
+
+By configuring the reverse proxy with these directives, you ensure that requests made to the HTTPS endpoint are correctly forwarded to the MailHog container's HTTP endpoint while preserving important request information.
+
+I hope this explanation clarifies the purpose of each line in the Nginx configuration. If you have any further questions, feel free to ask!

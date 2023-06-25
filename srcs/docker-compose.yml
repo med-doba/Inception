@@ -69,6 +69,16 @@ services:
       - web_data:/app/website
     networks:
       - my-network
+
+  mailhog:
+    container_name: mailhog
+    build: ./requirements/bonus/mailhog
+    restart: always
+    ports:
+      - 1025:1025
+      - 8025:8025
+    networks:
+      - my-network
     
 networks:
   my-network:
