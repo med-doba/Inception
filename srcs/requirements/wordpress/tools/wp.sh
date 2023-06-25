@@ -32,44 +32,23 @@ rm -rf *
     # wp plugin i redis-cache --activate --allow-root
     wp redis enable --allow-root
 
-    wp plugin install wp-mail-smtp --activate --allow-root
-    # wp option set wp_mail_smtp_mail_from mohaeddo03@gmail.com --allow-root
-    # wp option set wp_mail_smtp_mail_from_name "med-doba" --allow-root
-    # wp option set wp_mail_smtp_mailer smtp --allow-root
-    # # wp option set wp_mail_smtp_host smtp.example.com
-    # # wp option set wp_mail_smtp_port 587
-    # wp option set wp_mail_smtp_encryption none --allow-root
-    # wp option set wp_mail_smtp_authentication no --allow-root
-    # # wp option set wp_mail_smtp_username your-smtp-username
-    # # wp option set wp_mail_smtp_password your-smtp-password
+    # wp plugin install wp-mail-smtp --activate --allow-root
 
+    # wp option update smtp_host "$mailhog_ip" --allow-root
+    # wp option update smtp_port 1025 --allow-root
+    # wp option update smtp_ssl ssl --allow-root
+    #
+    # wp option update wp_mail_smtp lite_from_email 'mohaeddo03@gmail.com' --allow-root
+    # wp option update wp_mail_smtp lite_from_name '42inception' --allow-root
+    # wp option update wp_mail_smtp lite_return_path true --allow-root
+    # wp option update wp_mail_smtp lite_mailer 'smtp' --allow-root
+    # wp option update wp_mail_smtp lite_smtp_host 'mailhog' --allow-root
+    # wp option update wp_mail_smtp lite_encryption 'tls' --allow-root
+    # wp option update wp_mail_smtp lite_smtp_port '1025' --allow-root
+    # wp option update wp_mail_smtp lite_authentication 'false' --allow-root
+    # wp option update wp_mail_smtp lite_backup_connection 'none' --allow-root
 
-    # Set WP Mail SMTP options
-    wp option set wp_mail_smtp_mail_from mohaeddo03@gmail.com --allow-root
-    wp option set wp_mail_smtp_mail_from_name "med-doba" --allow-root
-    wp option set wp_mail_smtp_mailer other --allow-root
-    wp option set wp_mail_smtp_host your-smtp-host --allow-root
-    wp option set wp_mail_smtp_port your-smtp-port --allow-root
-    wp option set wp_mail_smtp_encryption your-smtp-encryption --allow-root
-    wp option set wp_mail_smtp_authentication no --allow-root
-    # wp option set wp_mail_smtp_username your-smtp-username --allow-root
-    # wp option set wp_mail_smtp_password your-smtp-password --allow-root
-
-    # mailhog
-    wp config set WPMS_ON true --allow-root
-    wp config set WPMS_MAILER smtp --allow-root
-    wp config set WPMS_SMTP_HOST mailhog --allow-root
-    wp config set WPMS_SMTP_PORT 1025 --allow-root
-    wp config set WPMS_SSL false --allow-root
-
-
-
-    # mailhog
-    # wp config set WPMS_ON true --allow-root
-    # wp config set WPMS_MAILER smtp --allow-root
-    # wp config set WPMS_SMTP_HOST mailhog --allow-root
-    # wp config set WPMS_SMTP_PORT 1025 --allow-root
-    # wp config set WPMS_SSL false --allow-root
+    #
 
 
 # fi
