@@ -79,6 +79,17 @@ services:
       - 8025:8025
     networks:
       - my-network
+
+  ftp_server:
+    container_name: ftp-server
+      build: ./requirements/bonus/ftp-server
+    ports:
+      - '20:20'
+      - '21:21'
+    volumes:
+      - wp_data:/var/www/html
+      # - wordpress_volume:/path/to/wordpress
+      - nginx_volume:/path/to/nginx
   
   google-analytics:
     container_name: google-analytics
