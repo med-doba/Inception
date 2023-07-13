@@ -19,6 +19,8 @@ chmod -R 755 "$www_directory"
 
 echo "User '$username' has been created and granted access to the www files."
 
+echo "med-doba" >> /etc/vsftpd.userlist
+
 service vsftpd stop
 
 sleep 10
