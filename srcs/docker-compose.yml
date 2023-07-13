@@ -82,27 +82,33 @@ services:
 
   ftp_server:
     container_name: ftp-server
-      build: ./requirements/bonus/ftp-server
+    build: ./requirements/bonus/ftp-server
+    restart: always
     ports:
       - '20:20'
       - '21:21'
     volumes:
       - wp_data:/var/www/html
       # - wordpress_volume:/path/to/wordpress
-      - nginx_volume:/path/to/nginx
-  
-  google-analytics:
-    container_name: google-analytics
-    build: ./requirements/bonus/google-analytics
-    depends_on:
-      - wordpress
-    restart: always
-    volumes:
-      - wp_data:/var/www/html
+      # - nginx_volume:/path/to/nginx
     env_file:
       - .env
     networks:
       - my-network
+    
+  
+  # google-analytics:
+  #   container_name: google-analytics
+  #   build: ./requirements/bonus/google-analytics
+  #   depends_on:
+  #     - wordpress
+  #   restart: always
+  #   volumes:
+  #     - wp_data:/var/www/html
+  #   env_file:
+  #     - .env
+  #   networks:
+  #     - my-network
     
 networks:
   my-network:

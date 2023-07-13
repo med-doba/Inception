@@ -4,8 +4,6 @@ RUN apt-get update
 
 RUN apt-get install -y vsftpd
 
-# RUN sed -i 's|^listen=NO|listen=YES|' /etc/vsftpd.conf && sed -i 's|^listen_address=127.0.0.1|listen_address=127.0.0.1|' /etc/vsftpd.conf
-
 COPY ./conf/vsftpd.conf /etc/vsftpd.conf
 
 COPY ./tools/ftp.sh .
