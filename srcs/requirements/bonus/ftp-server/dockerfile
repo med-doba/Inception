@@ -12,6 +12,6 @@ RUN chmod +x ./ftp.sh
 
 RUN mkdir -p /var/www/html
 
-EXPOSE 20 21
+# EXPOSE 20 21
 
 CMD ["./ftp.sh"]

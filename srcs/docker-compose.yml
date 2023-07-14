@@ -60,7 +60,7 @@ services:
      - "9000"
     networks:
       - my-network
-  
+
   website:
     container_name: website
     build: ./requirements/bonus/website
@@ -87,6 +87,7 @@ services:
     ports:
       - '20:20'
       - '21:21'
+      - '21100-21110:21100-21110'
     volumes:
       - wp_data:/var/www/html
       # - wordpress_volume:/path/to/wordpress
@@ -95,8 +96,8 @@ services:
       - .env
     networks:
       - my-network
-    
-  
+
+
   # google-analytics:
   #   container_name: google-analytics
   #   build: ./requirements/bonus/google-analytics
@@ -109,7 +110,7 @@ services:
   #     - .env
   #   networks:
   #     - my-network
-    
+
 networks:
   my-network:
     driver: bridge
@@ -121,16 +122,16 @@ volumes:
     driver_opts:
      type: none
      o: bind
-     device: /Users/med-doba/Desktop/volumes/db_data
+     device: /Users/mac/Desktop/volumes/db_data
   wp_data:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /Users/med-doba/Desktop/volumes/wp_data
+      device: /Users/mac/Desktop/volumes/wp_data
   web_data:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /Users/med-doba/Desktop/volumes/web_data
+      device: /Users/mac/Desktop/volumes/web_data

@@ -9,7 +9,12 @@ service vsftpd start
 
 sleep 10
 
-useradd -m -p $(openssl passwd -crypt "$password") "$username"
+# useradd -m -p $(openssl passwd -crypt "$password") "$username"
+adduser $username --disabled-password
+
+echo "$username:$password" | /usr/sbin/chpasswd &> /dev/null
+
+echo "$username" | tee -a /etc/vsftpd.userlist &> /dev/null
 
 # Give the user rights to the www files
 www_directory="/var/www/html"
