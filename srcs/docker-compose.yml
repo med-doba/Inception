@@ -74,6 +74,8 @@ services:
     container_name: mailhog
     build: ./requirements/bonus/mailhog
     restart: always
+    volumes:
+      - wp_data:/var/www/html
     ports:
       - 1025:1025
       - 8025:8025
@@ -91,25 +93,23 @@ services:
     volumes:
       - wp_data:/var/www/html
       # - wordpress_volume:/path/to/wordpress
-      # - nginx_volume:/path/to/nginx
     env_file:
       - .env
     networks:
       - my-network
 
-
-  # google-analytics:
-  #   container_name: google-analytics
-  #   build: ./requirements/bonus/google-analytics
-  #   depends_on:
-  #     - wordpress
-  #   restart: always
-  #   volumes:
-  #     - wp_data:/var/www/html
-  #   env_file:
-  #     - .env
-  #   networks:
-  #     - my-network
+  cadvisor:
+    container_name: cadvisor
+    build: ./requirements/bonus/cadvisor
+    ports:
+      - 8080:8080
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    networks:
+      - my-network
 
 networks:
   my-network:
@@ -122,16 +122,16 @@ volumes:
     driver_opts:
      type: none
      o: bind
-     device: /Users/mac/Desktop/volumes/db_data
+     device: /Users/med-doba/Desktop/volumes/db_data
   wp_data:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /Users/mac/Desktop/volumes/wp_data
+      device: /Users/med-doba/Desktop/volumes/wp_data
   web_data:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /Users/mac/Desktop/volumes/web_data
+      device: /Users/med-doba/Desktop/volumes/web_data

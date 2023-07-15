@@ -6,7 +6,6 @@ mkdir -p $dir
 cd /var/www/html
 rm -rf *
 
-# if [ -d "$dir" ]; then
     # Download WordPress and move it to the HTML directory
     wp core download --allow-root
 
@@ -32,26 +31,36 @@ rm -rf *
     # wp plugin i redis-cache --activate --allow-root
     wp redis enable --allow-root
 
-    # wp plugin install wp-mail-smtp --activate --allow-root
-
-    # wp option update smtp_host "$mailhog_ip" --allow-root
-    # wp option update smtp_port 1025 --allow-root
-    # wp option update smtp_ssl ssl --allow-root
+    # mailhog
+    wp plugin install wp-mail-smtp --activate --allow-root
     #
+    # wp option update smtp_transport smtp --allow-root
+
+    #     wp option update smtp_host mailhog --allow-root
+    #     wp option update smtp_port 1025 --allow-root
+    # wp option update smtp_host <mailhog_ip_address> --allow-root
+    wp option update smtp_host mailhog --allow-root
+    wp option update smtp_port 1025 --allow-root
+    wp option update smtp_ssl false --allow-root
+    wp option update smtp_auto_tls false --allow-root
+    wp option update smtp_auth false --allow-root
+
+
+    #
+
+    # # wp option update smtp_host "$mailhog_ip" --allow-root
+    # wp option update smtp_port 1025 --allow-root
+    # # wp option update smtp_ssl ssl --allow-root
+    # #
     # wp option update wp_mail_smtp lite_from_email 'mohaeddo03@gmail.com' --allow-root
     # wp option update wp_mail_smtp lite_from_name '42inception' --allow-root
-    # wp option update wp_mail_smtp lite_return_path true --allow-root
+    # # wp option update wp_mail_smtp lite_return_path true --allow-root
     # wp option update wp_mail_smtp lite_mailer 'smtp' --allow-root
-    # wp option update wp_mail_smtp lite_smtp_host 'mailhog' --allow-root
-    # wp option update wp_mail_smtp lite_encryption 'tls' --allow-root
+    # # wp option update wp_mail_smtp lite_smtp_host 'mailhog' --allow-root
+    # # wp option update wp_mail_smtp lite_encryption 'tls' --allow-root
     # wp option update wp_mail_smtp lite_smtp_port '1025' --allow-root
     # wp option update wp_mail_smtp lite_authentication 'false' --allow-root
-    # wp option update wp_mail_smtp lite_backup_connection 'none' --allow-root
-
-    #
-
-
-# fi
+    # # wp option update wp_mail_smtp lite_backup_connection 'none' --allow-root
 
 #start the php-fpm servere
 php-fpm7.3 -F
