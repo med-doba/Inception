@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  db:
+  mariadb:
     container_name: mariadb
     build: ./requirements/mariadb
     restart: always
@@ -14,7 +14,7 @@ services:
 
   wordpress:
     depends_on:
-      - db
+      - mariadb
     container_name: wordpress
     build: ./requirements/wordpress
     restart: always
@@ -31,7 +31,7 @@ services:
     ports:
       - "443:443"
     depends_on:
-      - db
+      - mariadb
       - wordpress
       - adminer
     restart: always
@@ -54,7 +54,7 @@ services:
     container_name: adminer
     build: ./requirements/bonus/adminer
     depends_on:
-      - db
+      - mariadb
     restart: always
     expose:
      - "9000"
@@ -92,22 +92,8 @@ services:
       - '21100-21110:21100-21110'
     volumes:
       - wp_data:/var/www/html
-      # - wordpress_volume:/path/to/wordpress
     env_file:
       - .env
-    networks:
-      - my-network
-
-  cadvisor:
-    container_name: cadvisor
-    build: ./requirements/bonus/cadvisor
-    ports:
-      - 8080:8080
-    volumes:
-      - /:/rootfs:ro
-      - /var/run:/var/run:rw
-      - /sys:/sys:ro
-      - /var/lib/docker/:/var/lib/docker:ro
     networks:
       - my-network
 
@@ -122,16 +108,16 @@ volumes:
     driver_opts:
      type: none
      o: bind
-     device: /Users/med-doba/Desktop/volumes/db_data
+     device: /home/med-doba/data/db_data
   wp_data:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /Users/med-doba/Desktop/volumes/wp_data
+      device: /home/med-doba/data/wp_data
   web_data:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /Users/med-doba/Desktop/volumes/web_data
+      device: /home/med-doba/data/web_data

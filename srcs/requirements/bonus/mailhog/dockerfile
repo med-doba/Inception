@@ -22,5 +22,4 @@ RUN chmod +x ./mailhog.sh
 # Expose the SMTP and HTTP ports
 EXPOSE 1025 8025
 
-# Set the entrypoint command to start MailHog
 CMD ["./mailhog.sh"]

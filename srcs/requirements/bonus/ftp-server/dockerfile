@@ -1,8 +1,6 @@
 FROM debian:buster
 
-RUN apt-get update
-
-RUN apt-get install -y vsftpd
+RUN apt-get update && apt-get install -y vsftpd
 
 COPY ./conf/vsftpd.conf /etc/vsftpd.conf
 
@@ -12,6 +10,6 @@ RUN chmod +x ./ftp.sh
 
 RUN mkdir -p /var/www/html
 
-# EXPOSE 20 21
+EXPOSE 20 21
 
 CMD ["./ftp.sh"]

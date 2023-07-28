@@ -7,9 +7,7 @@ RUN sed -i 's|^listen = .*$|listen = 0.0.0.0:9000|' /etc/php/7.3/fpm/pool.d/www.
 RUN apt-get update && \
 	apt-get install -y curl
 
-RUN mkdir -p /run/php
-
-RUN service php7.3-fpm start
+RUN mkdir -p /run/php && service php7.3-fpm start
 
 RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
 	chmod +x wp-cli.phar && \

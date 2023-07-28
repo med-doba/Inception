@@ -9,11 +9,6 @@ RUN mkdir /etc/nginx/ssl && \
 
 COPY ./conf/nginx.conf /etc/nginx/conf.d/
 
-# COPY ./tools/index.html /usr/share/nginx/html/index.html
-
-# RUN chown -R www-data:www-data /var/www/html && chmod -R 755 /var/www/html
-
-# Create a directory for PHP temporary files
 RUN mkdir -p /var/www/html
 
 CMD ["nginx", "-g", "daemon off;"]

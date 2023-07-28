@@ -9,12 +9,12 @@ down:
 
 clean: down
 	-docker volume rm srcs_db_data srcs_wp_data srcs_web_data
-	-rm -rf /Users/med-doba/Desktop/volumes/wp_data/*
-	-rm -rf /Users/med-doba/Desktop/volumes/db_data/*
-	-rm -rf /Users/med-doba/Desktop/volumes/web_data/*
-	-rm -rf /Users/med-doba/Desktop/volumes/wp_data/.*
-	-rm -rf /Users/med-doba/Desktop/volumes/db_data/.*
-	-rm -rf /Users/med-doba/Desktop/volumes/web_data/.*
+	-sudo rm -rf /home/med-doba/data/wp_data/*
+	-sudo rm -rf /home/med-doba/data/db_data/*
+	-sudo rm -rf /home/med-doba/data/web_data/*
+	-sudo rm -rf /home/med-doba/data/wp_data/.*
+	-sudo rm -rf /home/med-doba/data/db_data/.*
+	-sudo rm -rf /home/med-doba/data/web_data/.*
 
 fclean: clean
 	-docker rmi $(shell docker images -q)
