@@ -7,7 +7,11 @@ RUN apt-get update && \
 RUN mkdir /etc/nginx/ssl && \
 	openssl req -x509 -newkey rsa:2048 -keyout /etc/nginx/ssl/nginx.key -out /etc/nginx/ssl/nginx.crt -days 365 -nodes -subj '/CN=localhost'
 
-COPY ./conf/nginx.conf /etc/nginx/conf.d/
+RUN rm -rf /etc/nginx/sites-available/* /etc/nginx/sites-enabled/*
+
+COPY ./conf/nginx.conf /etc/nginx/sites-available/default
+
+RUN ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 
 RUN mkdir -p /var/www/html
 
